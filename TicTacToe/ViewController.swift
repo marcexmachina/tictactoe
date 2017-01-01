@@ -16,6 +16,10 @@ class ViewController: UIViewController {
     // 0 is empty, 1 is noughts, 2 is crosses
     var gameState = [0,0,0,0,0,0,0,0,0]
     
+    let winningCombos = [[0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [2,4,6]]
+    
+    var winner = 0
+    
     @IBAction func buttonPressed(_ sender: AnyObject) {
         
         // Translate tag to position in gameState array
@@ -32,6 +36,13 @@ class ViewController: UIViewController {
             } else {
                 sender.setImage(UIImage(named: "cross.png"), for: [])
                 activePlayer = 1
+            }
+        }
+        
+        for combo in winningCombos {
+            if gameState[combo[0]] != 0 && gameState[combo[1]] == gameState[combo[0]] && gameState[combo[2]] == gameState[combo[1]] {
+                winner = activePlayer == 1 ? 2 : 1
+                print("Player \(winner) wins!")
             }
         }
     }
